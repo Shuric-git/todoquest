@@ -1,17 +1,23 @@
-import React from 'react';
-
 import {Footer} from '../router'
 import {NewTaskForm} from '../router'
 import {TaskList} from '../router'
 
-import '../index.css';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+
+import './App.css';
 
 function App() {
 
   const taskData = [
-    {body: 'completed', state: 'Completed task', timestamp: 'date'},
-    {body: 'editing', state: 'Editing task', timestamp: 'date'},
-    {body: 'active', state: 'Active task', timestamp: 'date'},
+    {id: 1, state: 'completed', body: 'Completed task', timestamp: formatDistanceToNow(
+      new Date(2022, 5, 7)
+    )},
+    {id: 2, state: 'editing', body: 'Editing task', timestamp: formatDistanceToNow(
+      new Date()
+    )},
+    {id: 3, state: 'active', body: 'Active task', timestamp: formatDistanceToNow(
+      new Date()
+    )}
   ]
 
   return (

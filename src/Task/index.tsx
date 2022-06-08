@@ -1,13 +1,16 @@
-import React, {FC} from "react";
+import {FC} from "react";
 
+import { ITaskInner } from "../interafces";
 
-const Task: FC = () => {
+import './Task.css';
+
+const Task: FC<ITaskInner> = ({body, timestamp}) => {
     return (
         <div className="view">
             <input className="toggle" type="checkbox"></input>
             <label>
-                <span className="description">Completed task</span>
-                <span className="created">created 17 seconds ago</span>
+                <span className="description">{body}</span>
+                <span className="created">{timestamp}</span>
             </label>
             <button className="icon icon-edit"></button>
             <button className="icon icon-destroy"></button>

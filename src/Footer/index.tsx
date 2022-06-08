@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import {TasksFilter} from "../TasksFilter";
 
-import '../index.css';
+import './Footer.css';
 
 const Footer: FC = () => {
     return (
