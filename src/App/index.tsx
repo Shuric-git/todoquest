@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {Footer} from '../router'
 import {NewTaskForm} from '../router'
 import {TaskList} from '../router'
@@ -9,13 +10,13 @@ import './App.css';
 function App() {
 
   const taskData = [
-    {id: 1, state: 'completed', body: 'Completed task', timestamp: formatDistanceToNow(
+    {id: 1, condition: 'completed', body: 'Completed task', timestamp: formatDistanceToNow(
       new Date(2022, 5, 7)
     )},
-    {id: 2, state: 'editing', body: 'Editing task', timestamp: formatDistanceToNow(
+    {id: 2, condition: 'editing', body: 'Editing task', timestamp: formatDistanceToNow(
       new Date()
     )},
-    {id: 3, state: 'active', body: 'Active task', timestamp: formatDistanceToNow(
+    {id: 3, condition: 'active', body: 'Active task', timestamp: formatDistanceToNow(
       new Date()
     )}
   ]
