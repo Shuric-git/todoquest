@@ -6,39 +6,31 @@ import {ITask} from "../interafces";
 
 import './TaskList.css'
 
-const TaskList: FC<{tasks: Array<ITask>}> = ({tasks}) => {
-
-    const [done, setDone] = useState(false)
-
-    const onDoneHandler = () => {
-        setDone((done) => !done)
-    }
+const TaskList: FC<{tasks: Array<ITask>, onDeleted: (id: number)=> void, onDoneHandler: (id: number)=> void}> = (props) => {
+    const {tasks, onDoneHandler, onDeleted} = props
 
     const elements = tasks.map((item) => {
 
-        let {id, condition, onDeleted, ...itemProps} = item;
+        let {id, condition, ...itemProps} = item;
 
-        if (condition !== 'editing') {
-            condition = done ? 'completed' : 'active'
-        }
-
-        if (condition === 'editing') {
-            return (
-                <li key={id} className={condition}>
-                    <Task {...itemProps}/>
-                    <input type="text" className="edit" value="Editing task"></input>
-                </li>
-            )
-        } else {
+        // if (condition === 'editing') {
+        //     return (
+        //         <li key={id} className={condition}>
+        //             <Task {...itemProps}/>
+        //             <input type="text" className="edit" value="Editing task"></input>
+        //         </li>
+        //     )
+        // } else {
             return (
                 <li key={id} className={condition}>
                     <Task {...itemProps}
+                        id={id}
                     onDone={ onDoneHandler }
-                    onDeleted={() => console.log('deleted')}/>
+                    deleteTask={() => onDeleted}
+                    />
+                    {condition === 'editing' ? <input type="text" className="edit" value="Editing task"></input> : ''}
                 </li>
             )
-        }
-
     })
     return (
         <ul className="todo-list">
