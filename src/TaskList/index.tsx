@@ -8,19 +8,15 @@ import './TaskList.css'
 
 const TaskList: FC<{tasks: Array<ITask>}> = ({tasks}) => {
 
-    // const [condition, setCondition] = useState('active')
-    // const [color, setColor] = useState('black')
-
     const [done, setDone] = useState(false)
 
-
-    // if (done) {
-    //     classNames += ' done'
-    // }
+    const onDoneHandler = () => {
+        setDone((done) => !done)
+    }
 
     const elements = tasks.map((item) => {
 
-        let {id, condition, ...itemProps} = item;
+        let {id, condition, onDeleted, ...itemProps} = item;
 
         if (condition !== 'editing') {
             condition = done ? 'completed' : 'active'
@@ -35,12 +31,10 @@ const TaskList: FC<{tasks: Array<ITask>}> = ({tasks}) => {
             )
         } else {
             return (
-                <li key={id} className={condition}
-                    // onClick={ (e) =>
-                    //     console.log(e.target)}
-                >
+                <li key={id} className={condition}>
                     <Task {...itemProps}
-                    onDone={() => console.log('completed')}/>
+                    onDone={ onDoneHandler }
+                    onDeleted={() => console.log('deleted')}/>
                 </li>
             )
         }

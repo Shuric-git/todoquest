@@ -2,13 +2,14 @@ interface ITask {
     id: number,
     body: string,
     condition: string,
-    timestamp: string
+    timestamp: string,
+    onDeleted: ()=> void
 }
 
 interface ITaskInner {
     body: string, 
     timestamp: string,
-    onDone?: Function
+    onDone?: () => void,
 }
 
 export type {

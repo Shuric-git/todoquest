@@ -9,6 +9,8 @@ import './App.css';
 
 function App() {
 
+  const onDeleteHandler = () => console.log('id')
+
   const taskData = [
     {id: 1, condition: 'completed', body: 'Completed task', timestamp: formatDistanceToNow(
       new Date(2022, 5, 7)
@@ -29,7 +31,8 @@ function App() {
           <NewTaskForm />
         </header>
         <section className="main">
-          <TaskList tasks={taskData}/>
+          <TaskList tasks={taskData}
+          onDeleted={ onDeleteHandler }/>
           <Footer />
         </section>
       </section>
