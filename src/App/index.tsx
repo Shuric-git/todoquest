@@ -1,43 +1,46 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import {Footer} from '../router'
 import {NewTaskForm} from '../router'
 import {TaskList} from '../router'
+import todoItemContext from '../dataContext'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 import './App.css';
 import {ITask} from "../interafces";
-import React from "react";
+import React, { FC } from "react";
 
 function App() {
 
-  const taskData: Array<ITask> = [
-    {isDone: true, id: 1, condition: 'completed', body: 'Completed task', timestamp: formatDistanceToNow(
-          new Date(2022, 5, 7)
-      )},
-    {isDone: false, id: 2, condition: 'editing', body: 'Editing task', timestamp: formatDistanceToNow(
-          new Date()
-      )},
-    {isDone: false, id: 3, condition: 'active', body: 'Active task', timestamp: formatDistanceToNow(
-          new Date()
-      )}
-  ]
 
-  const [taskState, setDone] = useState(taskData);
-  const [deleteState, setDelete] = useState(taskData);
 
-  const onDeleteHandler = (id: number) => {
-    function deleter(deleteState: Array<ITask>) {
-      const idx = deleteState.findIndex((el: ITask) => el.id === id)
-      return [...deleteState.slice(0, idx), ...deleteState.slice(idx + 1)]
 
-    }
-  setDelete(deleter(deleteState))
+  const appContext = useContext(todoItemContext)
+
+  const {Provider} = todoItemContext
+
+  // console.log(appContext)
+
+  const [dataState, setChangeData] = useState(appContext);
+
+  function addItemHandler(text: string) {
+    // console.log(text)
   };
 
+
+
+  const onDeleteHandler = (id: number) => {
+    function deleter(dataState: Array<ITask>) {
+      const idx = dataState.findIndex((el: ITask) => el.id === id)
+      return [...dataState.slice(0, idx), ...dataState.slice(idx + 1)]
+
+    }
+    setChangeData(deleter(dataState))
+  };
+// console.log(dataState)
   const onDoneHandler = (id: number) => {
-  function completer(taskState: Array<ITask>) {
-    const completeArr = taskState.map((el: ITask) => {
+  function completer(dataState: Array<ITask>) {
+    const completeArr = dataState.map((el: ITask) => {
         if (el.id === id) {
           el.isDone = !el.isDone
         }
@@ -45,7 +48,15 @@ function App() {
       })
       return completeArr
     }
-  setDone(completer(taskState));
+    setChangeData(completer(dataState));
+  }
+
+  const AddItemBtn: FC<{ onClick: () => void }> = () => {
+    return(
+        <div className="add-Item__Form">
+          <button>Add</button>
+        </div>
+    )
   }
 
   return (
@@ -54,12 +65,18 @@ function App() {
         <header className = "header">
           <h1>todos</h1>
           <NewTaskForm />
+        <AddItemBtn
+        onClick = { () => addItemHandler('Yay') }
+        />
         </header>
         <section className = "main">
-          <TaskList tasks = { deleteState }
-          appDeleteTask = { onDeleteHandler }
-          onDoneApp = { onDoneHandler }
-          />
+          <Provider value={ dataState }>
+            <TaskList tasks = { dataState }
+                      appDeleteTask = { onDeleteHandler }
+                      onDoneApp = { onDoneHandler }
+            />
+          </Provider>
+
           <Footer />
         </section>
       </section>
