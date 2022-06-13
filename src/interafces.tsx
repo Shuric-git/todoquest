@@ -1,7 +1,7 @@
 interface ITask {
     id: number,
     body: string,
-    condition?: string,
+    condition: string,
     timestamp: string,
     isDone: boolean,
     // onDoneHandler: () => void
@@ -11,8 +11,8 @@ interface ITaskInner {
     id: number,
     body: string, 
     timestamp: string,
-    onDone?: (id: number) => void,
-    deleteTask?: ()=> void
+    onDoneTaskList: (id: number) => void,
+    taskListdeleteTask: (id: number)=> void
 }
 
 export type {

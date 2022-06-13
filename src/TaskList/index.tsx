@@ -6,37 +6,34 @@ import {ITask} from "../interafces";
 
 import './TaskList.css'
 
-const TaskList: FC<{tasks: Array<ITask>, onDeleted: (id: number)=> void, onDoneHandler: (id: number)=> void}> = (props) => {
-    const {tasks, onDoneHandler, onDeleted} = props
+const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, onDoneApp: (id: number) => void }> = (props) => {
 
-    const elements = tasks.map((item) => {
+    const editorial = <input type="text" className="edit" placeholder="Editing task"></input>
 
-        let {id, condition, ...itemProps} = item;
+    const { tasks, onDoneApp, appDeleteTask } = props
 
-        // if (condition === 'editing') {
-        //     return (
-        //         <li key={id} className={condition}>
-        //             <Task {...itemProps}/>
-        //             <input type="text" className="edit" value="Editing task"></input>
-        //         </li>
-        //     )
-        // } else {
+    const elements = tasks.map((item: ITask) => {
+
+        let { id, isDone, condition, ...itemProps } = item;
+
+        condition === 'editing' ? condition = 'editing' : isDone ? condition = 'completed' : condition = 'active'
+
             return (
-                <li key={id} className={condition}>
-                    <Task {...itemProps}
-                        id={id}
-                    onDone={ onDoneHandler }
-                    deleteTask={() => onDeleted}
+                <li key = { id } className = { condition }>
+                    <Task { ...itemProps }
+                    id = { id }
+                    onDoneTaskList = { () => onDoneApp(id) }
+                    taskListdeleteTask = { () => appDeleteTask(id) }
                     />
-                    {condition === 'editing' ? <input type="text" className="edit" value="Editing task"></input> : ''}
+                    { condition === 'editing' ? editorial : '' }
                 </li>
             )
     })
     return (
         <ul className="todo-list">
-            {elements}
+            { elements }
         </ul>
     )
 }
 
-export {TaskList}
+export { TaskList }

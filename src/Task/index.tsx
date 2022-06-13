@@ -4,17 +4,17 @@ import { ITaskInner } from "../interafces";
 
 import './Task.css';
 
-const Task: FC<ITaskInner> = (props) => {
-    const {body, timestamp, onDone, deleteTask, id} = props;
-    const [done, setDone] = useState(false)
+const Task: FC<ITaskInner> = (props: ITaskInner) => {
+    const {body, timestamp, onDoneTaskList, taskListdeleteTask, id} = props;
 
     const onDoneHandler = () => {
-        setDone(!done)
-        if(onDone) onDone(id)
+        onDoneTaskList(id)
     }
 
+    const onDeleteHandler = () => {
+        taskListdeleteTask(id)
+    }
 
-    // console.log(onDeleted)
     return (
         <div className="view">
             <input className="toggle" type="checkbox"></input>
@@ -25,7 +25,7 @@ const Task: FC<ITaskInner> = (props) => {
             </label>
             <button className="icon icon-edit"></button>
             <button className="icon icon-destroy"
-            onClick={ deleteTask }
+            onClick={ onDeleteHandler }
             ></button>
         </div>
     )
