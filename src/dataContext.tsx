@@ -30,5 +30,6 @@ const taskData = [
 ]
 
 const todoItemContext = createContext(taskData)
+
 // console.log(taskData)
 export default todoItemContext

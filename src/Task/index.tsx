@@ -17,16 +17,16 @@ const Task: FC<ITaskInner> = (props: ITaskInner) => {
 
     return (
         <div className="view">
-            <input className="toggle" type="checkbox"></input>
+            <input className="toggle" type="checkbox" />
             <label
             onClick={ onDoneHandler }>
                 <span className='description' >{body}</span>
                 <span className="created">{timestamp}</span>
             </label>
-            <button className="icon icon-edit"></button>
+            <button className="icon icon-edit" />
             <button className="icon icon-destroy"
             onClick={ onDeleteHandler }
-            ></button>
+             />
         </div>
     )
 }

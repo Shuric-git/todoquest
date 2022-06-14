@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, createContext} from 'react'
 import {Footer} from '../router'
 import {NewTaskForm} from '../router'
 import {TaskList} from '../router'
@@ -14,20 +14,17 @@ function App() {
 
 
 
-
   const appContext = useContext(todoItemContext)
 
   const {Provider} = todoItemContext
 
-  // console.log(appContext)
-
   const [dataState, setChangeData] = useState(appContext);
+
+  console.log(dataState)
 
   function addItemHandler(text: string) {
     // console.log(text)
   };
-
-
 
   const onDeleteHandler = (id: number) => {
     function deleter(dataState: Array<ITask>) {
@@ -59,6 +56,9 @@ function App() {
     )
   }
 
+  const itemStateChanger = createContext(onDeleteHandler)
+  // console.log(itemStateChanger)
+
   return (
     <div className = "App">
       <section className = "todoapp">
@@ -72,8 +72,8 @@ function App() {
         <section className = "main">
           <Provider value={ dataState }>
             <TaskList tasks = { dataState }
-                      appDeleteTask = { onDeleteHandler }
-                      onDoneApp = { onDoneHandler }
+              appDeleteTask = { onDeleteHandler }
+              onDoneApp = { onDoneHandler }
             />
           </Provider>
 

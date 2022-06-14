@@ -8,7 +8,7 @@ import './TaskList.css'
 
 const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, onDoneApp: (id: number) => void }> = (props) => {
 
-    const editorial = <input type="text" className="edit" placeholder="Editing task"></input>
+    const editorial = <input type="text" className="edit" placeholder="Editing task" />
 
     const { tasks, onDoneApp, appDeleteTask } = props
 
@@ -34,6 +34,11 @@ const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, o
             { elements }
         </ul>
     )
+}
+
+TaskList.defaultProps = {
+    appDeleteTask: () => {},
+    onDoneApp: () => {}
 }
 
 export { TaskList }
