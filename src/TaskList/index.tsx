@@ -40,5 +40,11 @@ TaskList.defaultProps = {
     appDeleteTask: () => {},
     onDoneApp: () => {}
 }
-
+// function dtl(id: number) {
+//     return function odtl(id: number) {
+//         return function deleteT(id: number) {
+//             'delete task'
+//         }
+//     }
+// }
 export { TaskList }

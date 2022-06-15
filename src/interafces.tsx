@@ -11,8 +11,8 @@ interface ITaskInner {
     id: number,
     body: string, 
     timestamp: string,
-    onDoneTaskList: (id: number) => void,
-    taskListdeleteTask: (id: number)=> void
+    onDoneTaskList: () => void,
+    taskListdeleteTask: ()=> void
 }
 
 export type {
