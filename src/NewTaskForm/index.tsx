@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 import './NewTaskForm.css'
 
@@ -8,4 +8,17 @@ const NewTaskForm: FC = () => {
     )
 }
 
-export {NewTaskForm}
+const AddItemBtn = (props: {itemAddhandler: (text: string) => void}) => {
+
+    const {itemAddhandler} = props
+
+    return(
+        <div className="add-Item__Form">
+            <button className="add--item__btn"
+                onClick = { () => itemAddhandler('Yay') }
+            >Add</button>
+        </div>
+    )
+}
+
+export {NewTaskForm, AddItemBtn}

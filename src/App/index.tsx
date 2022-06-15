@@ -1,8 +1,8 @@
 import {useState, useContext, createContext} from 'react'
 import {Footer} from '../router'
-import {NewTaskForm} from '../router'
+import {NewTaskForm, AddItemBtn} from '../router'
 import {TaskList} from '../router'
-import todoItemContext from '../dataContext'
+// import todoItemContext from '../dataContext'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -12,19 +12,35 @@ import React, { FC } from "react";
 
 function App() {
 
+  let maxId: number = 100;
 
+  // const [IDState, setID] = useState(1);
 
-  const appContext = useContext(todoItemContext)
+  function createItem(body: string, condition: string, createDate: any) {
+    maxId++
+    console.log(maxId)
+    return {
+      isDone: false,
+      id: maxId,
+      condition,
+      body,
+      timestamp: formatDistanceToNow( createDate )
+    }
+  }
 
-  const {Provider} = todoItemContext
+  const taskData = [
+    createItem('Completed task', 'completed', new Date(2022, 5, 7)),
+    createItem('Editing task', 'editing', new Date),
+    createItem('Active task', 'active',  new Date),
+  ]
 
-  const [dataState, setChangeData] = useState(appContext);
+  // const appContext = useContext(todoItemContext)
+  //
+  // const {Provider} = todoItemContext
 
-  console.log(dataState)
+  const [dataState, setChangeData] = useState(taskData);
 
-  function addItemHandler(text: string) {
-    // console.log(text)
-  };
+  // console.log(dataState)
 
   const onDeleteHandler = (id: number) => {
     function deleter(dataState: Array<ITask>) {
@@ -48,16 +64,10 @@ function App() {
     setChangeData(completer(dataState));
   }
 
-  const AddItemBtn: FC<{ onClick: () => void }> = () => {
-    return(
-        <div className="add-Item__Form">
-          <button>Add</button>
-        </div>
-    )
+  const onItemAdd = (text: string) => {
+    const newArr = [...dataState, createItem('Created task', 'active', new Date)]
+    setChangeData(newArr)
   }
-
-  const itemStateChanger = createContext(onDeleteHandler)
-  // console.log(itemStateChanger)
 
   return (
     <div className = "App">
@@ -66,16 +76,16 @@ function App() {
           <h1>todos</h1>
           <NewTaskForm />
         <AddItemBtn
-        onClick = { () => addItemHandler('Yay') }
+          itemAddhandler = { onItemAdd }
         />
         </header>
         <section className = "main">
-          <Provider value={ dataState }>
+          {/*<Provider value={ dataState }>*/}
             <TaskList tasks = { dataState }
               appDeleteTask = { onDeleteHandler }
               onDoneApp = { onDoneHandler }
             />
-          </Provider>
+          {/*</Provider>*/}
 
           <Footer />
         </section>
