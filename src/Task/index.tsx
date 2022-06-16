@@ -6,11 +6,18 @@ import './Task.css';
 
 const Task: FC<ITaskInner> = (props: ITaskInner) => {
 
-    const { body, timestamp, onDoneTaskList, taskListdeleteTask } = props;
+    const { isDone, body, timestamp, onDoneTaskList, taskListdeleteTask } = props;
+
+    const [checked, setChecked] = useState(isDone)
 
     return (
         <div className="view">
-            <input className="toggle" type="checkbox" />
+            <input className="toggle" type="checkbox"
+            defaultChecked={ isDone }
+            onClick={ () => {
+                console.log(checked)
+                setChecked(!checked)
+            } }/>
             <label
             onClick = { onDoneTaskList }>
                 <span className='description' >{body}</span>

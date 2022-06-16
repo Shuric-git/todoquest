@@ -1,17 +1,29 @@
-import React, { FC, KeyboardEvent } from "react";
+import React, { FC, KeyboardEvent, useState } from "react";
 
 import './NewTaskForm.css'
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
-const NewTaskForm: FC<{ appSubmitTask: (text: string) => void }> = (props) => {
+const NewTaskForm: FC<{ appSubmitTask: (text: string, condition: string, timestamp: Date) => void }> = (props) => {
 
     const {appSubmitTask} = props
 
+    function createItem(body: string, condition: string = 'active', createDate: Date) {
+
+        return {
+            isDone: false,
+            id: Date.now(),
+            condition,
+            body,
+            timestamp: formatDistanceToNow( createDate )
+        }
+    };
+
+    const [input, setInput] = useState('')
+
     const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
         if ( e.key === 'Enter' || e.key === 'NumpadEnter') {
-            console.log(e.target)
-            const eTarget = e.target
-            const valueStr = eTarget.value
-            appSubmitTask(valueStr);
+            console.log(input)
+            appSubmitTask(input, 'active', new Date())
         }
     }
 
@@ -19,8 +31,9 @@ const NewTaskForm: FC<{ appSubmitTask: (text: string) => void }> = (props) => {
         <input className="new-todo"
                placeholder="What needs to be done?"
                autoFocus
+               onChange={ e => setInput(e.target.value) }
             onKeyDown={ (e) => submitTask(e) }
-        ></input>
+         />
     )
 }
 

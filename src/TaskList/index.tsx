@@ -22,6 +22,7 @@ const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, o
                 <li key = { id } className = { condition }>
                     <Task { ...itemProps }
                     id = { id }
+                    isDone = { isDone }
                     onDoneTaskList = { () => onDoneApp(id) }
                     taskListdeleteTask = { () => appDeleteTask(id) }
                     />

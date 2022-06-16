@@ -12,8 +12,6 @@ import React, { FC } from "react";
 
 function App() {
 
-  let maxId: number = 100;
-
   function createItem(body: string, condition: string = 'active', createDate: Date) {
 
     return {
@@ -25,21 +23,10 @@ function App() {
     }
   };
 
-  function createItem2(body: string, condition: string = 'active', createDate: Date) {
-
-    return {
-      isDone: false,
-      id: maxId++,
-      condition,
-      body,
-      timestamp: formatDistanceToNow( createDate )
-    }
-  };
-
   const taskData = [
-    createItem2('Completed task', 'completed', new Date(2022, 5, 7)),
-    createItem2('Editing task', 'editing', new Date()),
-    createItem2('Active task', 'active',  new Date(2022, 5, 1)),
+    {isDone: true, condition: 'completed', id: 2135642, body: 'Completed task', timestamp: formatDistanceToNow( new Date(2022, 5, 7) )},
+    {isDone: true, condition: 'editing', id: 2112356442, body: 'Completed task', timestamp: formatDistanceToNow( new Date() )},
+    {isDone: false, condition: 'active', id: 2134642, body: 'Active task', timestamp: formatDistanceToNow( new Date(2022, 5, 1) )},
   ];
 
   const [dataState, setChangeData] = useState(taskData);
@@ -61,7 +48,7 @@ function App() {
   }
 
   const onItemAdd = (text: string) => {
-    const addArr = [...dataState, createItem(text, 'active', new Date)]
+    const addArr = [...dataState, createItem(text, 'active', new Date())]
     setChangeData(addArr)
   }
 

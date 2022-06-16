@@ -8,6 +8,7 @@ interface ITask {
 }
 
 interface ITaskInner {
+    isDone: boolean,
     id: number,
     body: string, 
     timestamp: string,
