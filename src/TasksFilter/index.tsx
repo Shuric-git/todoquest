@@ -1,17 +1,30 @@
 import React, { FC } from "react";
 
-const TasksFilter: FC = () => {
+const TasksFilter: FC<{filter: string, onFilterChange: (name: string) => void}> = ({filter, onFilterChange}) => {
+
+    const buttons = [
+        {name: 'all', label: 'All'},
+        {name: 'active', label: 'Active'},
+        {name: 'done', label: 'Completed'},
+    ]
+
+    const buttonsEl = buttons.map(({ name, label}) => {
+        const isActive = filter === name;
+        const clazz = isActive ? 'selected' : ''
+        return (
+            <li key={name}>
+                <button
+                className={clazz}
+                key={name}
+                onClick={() => onFilterChange(name)}>
+                {label}</button>
+            </li>
+        )
+    });
+
     return (
         <ul className="filters">
-            <li>
-                <button className="selected">All</button>
-            </li>
-            <li>
-                <button>Active</button>
-            </li>
-            <li>
-                <button>Completed</button>
-            </li>
+            {buttonsEl}
         </ul>
     )
 }

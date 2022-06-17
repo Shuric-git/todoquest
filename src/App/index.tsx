@@ -25,15 +25,49 @@ function App() {
 
   const taskData = [
     {isDone: true, condition: 'completed', id: 2135642, body: 'Completed task', timestamp: formatDistanceToNow( new Date(2022, 5, 7) )},
-    {isDone: true, condition: 'editing', id: 2112356442, body: 'Completed task', timestamp: formatDistanceToNow( new Date() )},
+    {isDone: false, condition: 'editing', id: 2112356442, body: 'Completed task', timestamp: formatDistanceToNow( new Date() )},
     {isDone: false, condition: 'active', id: 2134642, body: 'Active task', timestamp: formatDistanceToNow( new Date(2022, 5, 1) )},
   ];
 
   const [dataState, setChangeData] = useState(taskData);
 
+  const [filterState, setFilter] = useState('done');
+
+  function filterChange(filter: string) {
+    setFilter(filter)
+  }
+
+  function search (items: Array<ITask>, term: string) {
+    if (term.length === 0) {
+      return items;
+    }
+
+    return items.filter((item) => {
+      return item.body.indexOf(term) > -1;
+    });
+  }
+
+  function filter(items: Array<ITask>, filterState: string) {
+    switch(filterState) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter(item => !item.isDone);
+      case 'done':
+        return items.filter(item => item.isDone);
+      default:
+        return items;
+    }
+  }
+
+  let term = ''
+
+  const visibleItems = filter(search(dataState, term), filterState)
+
+  console.log(visibleItems)
+
   const onDeleteHandler = (id: number) => {
-    const idx = dataState.findIndex((el: ITask) => el.id === id);
-    const deleteArr = [...dataState.slice(0, idx), ...dataState.slice(idx + 1)];
+    const deleteArr = dataState.filter( item => item.id !== id);
     setChangeData(deleteArr)
   };
 
@@ -45,7 +79,9 @@ function App() {
         return el
       });
     setChangeData(doneArr);
-  }
+  };
+
+  const doneCounter = dataState.filter(item => !item.isDone).length
 
   const onItemAdd = (text: string) => {
     const addArr = [...dataState, createItem(text, 'active', new Date())]
@@ -62,11 +98,15 @@ function App() {
           />
         </header>
         <section className = "main">
-            <TaskList tasks = { dataState }
+            <TaskList tasks = { visibleItems }
               appDeleteTask = { onDeleteHandler }
               onDoneApp = { onDoneHandler }
             />
-          <Footer />
+          <Footer
+          doneCounter={doneCounter}
+          onFilterChange={filterChange}
+          filter={filterState}
+          />
         </section>
       </section>
     </div>
