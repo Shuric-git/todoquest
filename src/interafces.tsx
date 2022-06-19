@@ -1,22 +1,20 @@
 interface ITask {
-    id: number,
-    body: string,
-    condition: string,
-    timestamp: string,
-    isDone: boolean,
-    // onDoneHandler: () => void
+  id: number;
+  body: string;
+  condition: string;
+  timestamp: string;
+  isDone: boolean;
+  // onDoneHandler: () => void
 }
 
 interface ITaskInner {
-    isDone: boolean,
-    id: number,
-    body: string, 
-    timestamp: string,
-    onDoneTaskList: () => void,
-    taskListdeleteTask: ()=> void
+  isDone: boolean;
+  id: number;
+  body: string;
+  timestamp: string;
+  onDoneTaskList: () => void;
+  taskListdeleteTask: () => void;
+  editItem: () => void;
 }
 
-export type {
-    ITask,
-    ITaskInner
-}
+export type { ITask, ITaskInner };
