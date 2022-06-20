@@ -8,18 +8,25 @@ const Task: FC<ITaskInner> = (props: ITaskInner) => {
 
     const { isDone, body, timestamp, onDoneTaskList, taskListdeleteTask } = props;
 
-    const [checked, setChecked] = useState(isDone)
+    const [checked, setChecked] = useState<boolean>(isDone)
+
+    const onClickHandler = () => {
+        onDoneTaskList();
+        setChecked(!checked)
+    }
 
     return (
         <div className="view">
             <input className="toggle" type="checkbox"
-            defaultChecked={ isDone }
-            onClick={ () => {
-                console.log(checked)
-                setChecked(!checked)
-            } }/>
+            checked={ checked }
+            onChange = {
+                onClickHandler
+            }
+            />
             <label
-            onClick = { onDoneTaskList }>
+            onClick = {
+                onClickHandler
+            }>
                 <span className='description' >{body}</span>
                 <span className="created">{timestamp}</span>
             </label>

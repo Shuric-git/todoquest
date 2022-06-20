@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 
 import {Task} from '../router'
 
@@ -6,33 +6,44 @@ import {ITask} from "../interafces";
 
 import './TaskList.css'
 
-const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, onDoneApp: (id: number) => void }> = (props) => {
+const TaskList: FC<{ tasks: Array<ITask>, appDeleteTask: (id: number) => void, onDoneApp: (id: number) => void, filteredArr: Array<ITask> }> = (props) => {
+
+
 
     const editorial = <input type="text" className="edit" placeholder="Editing task" />
 
-    const { tasks, onDoneApp, appDeleteTask } = props
+    let { tasks, onDoneApp, appDeleteTask, filteredArr } = props
+    console.log(filteredArr)
 
-    const elements = tasks.map((item: ITask) => {
+    const createElements = () => {
+        if (filteredArr) {
+            tasks = filteredArr
+        }
+        const elements = tasks.map((item: ITask) => {
 
-        let { id, isDone, condition, ...itemProps } = item;
+            let { id, isDone, condition, ...itemProps } = item;
 
-        condition === 'editing' ? condition = 'editing' : isDone ? condition = 'completed' : condition = 'active'
+            condition === 'editing' ? condition = 'editing' : isDone ? condition = 'completed' : condition = 'active'
 
             return (
                 <li key = { id } className = { condition }>
                     <Task { ...itemProps }
-                    id = { id }
-                    isDone = { isDone }
-                    onDoneTaskList = { () => onDoneApp(id) }
-                    taskListdeleteTask = { () => appDeleteTask(id) }
+                          id = { id }
+                          isDone = { isDone }
+                          onDoneTaskList = { () => onDoneApp(id) }
+                          taskListdeleteTask = { () => appDeleteTask(id) }
                     />
                     { condition === 'editing' ? editorial : '' }
                 </li>
             )
-    })
+        })
+        return elements
+    }
+
+
     return (
         <ul className="todo-list">
-            { elements }
+            { createElements() }
         </ul>
     )
 }

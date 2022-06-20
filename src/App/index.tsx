@@ -25,15 +25,14 @@ function App() {
 
   const taskData = [
     {isDone: true, condition: 'completed', id: 2135642, body: 'Completed task', timestamp: formatDistanceToNow( new Date(2022, 5, 7) )},
-    {isDone: true, condition: 'editing', id: 2112356442, body: 'Completed task', timestamp: formatDistanceToNow( new Date() )},
+    {isDone: false, condition: 'editing', id: 2112356442, body: 'Completed task', timestamp: formatDistanceToNow( new Date() )},
     {isDone: false, condition: 'active', id: 2134642, body: 'Active task', timestamp: formatDistanceToNow( new Date(2022, 5, 1) )},
   ];
 
   const [dataState, setChangeData] = useState(taskData);
 
   const onDeleteHandler = (id: number) => {
-    const idx = dataState.findIndex((el: ITask) => el.id === id);
-    const deleteArr = [...dataState.slice(0, idx), ...dataState.slice(idx + 1)];
+    const deleteArr = dataState.filter(item => item.id !== id);
     setChangeData(deleteArr)
   };
 
@@ -47,10 +46,21 @@ function App() {
     setChangeData(doneArr);
   }
 
+  const isDoneCounter: number = dataState.filter(item => !item.isDone).length
   const onItemAdd = (text: string) => {
     const addArr = [...dataState, createItem(text, 'active', new Date())]
     setChangeData(addArr)
   }
+
+  const filterActive = () => {
+    // console.log('yay')
+    return dataState.filter(item => item.condition === 'active');
+
+    // return <>{filterArr.map(item => {
+    //   return item
+    // })}</>
+  }
+
 
   return (
     <div className = "App">
@@ -65,8 +75,12 @@ function App() {
             <TaskList tasks = { dataState }
               appDeleteTask = { onDeleteHandler }
               onDoneApp = { onDoneHandler }
+              filteredArr = {filterActive()}
             />
-          <Footer />
+          <Footer
+              isDoneCounter={isDoneCounter}
+              filterActive={filterActive}
+          />
         </section>
       </section>
     </div>

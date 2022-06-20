@@ -1,13 +1,15 @@
 import React, { FC } from "react";
 
-const TasksFilter: FC = () => {
+const TasksFilter: FC<{filterActive: () => void}> = ({filterActive}) => {
     return (
         <ul className="filters">
             <li>
                 <button className="selected">All</button>
             </li>
             <li>
-                <button>Active</button>
+                <button
+                onClick={filterActive}
+                >Active</button>
             </li>
             <li>
                 <button>Completed</button>

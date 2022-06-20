@@ -22,7 +22,6 @@ const NewTaskForm: FC<{ appSubmitTask: (text: string, condition: string, timesta
 
     const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
         if ( e.key === 'Enter' || e.key === 'NumpadEnter') {
-            console.log(input)
             appSubmitTask(input, 'active', new Date())
         }
     }
