@@ -70,14 +70,14 @@ function App() {
 
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
-    case 'all':
-      return items;
-    case 'active':
-      return items.filter((item) => !item.isDone);
-    case 'completed':
-      return items.filter((item) => item.isDone);
-    default:
-      return items;
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.isDone);
+      case 'completed':
+        return items.filter((item) => item.isDone);
+      default:
+        return items;
     }
   }
 
