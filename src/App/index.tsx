@@ -1,14 +1,9 @@
-import { useState, useContext, createContext } from 'react';
-import { Footer } from '../router';
-import { NewTaskForm } from '../router';
-import { TaskList } from '../router';
-// import todoItemContext from '../dataContext'
-
+import React, { useState } from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
+import { Footer, NewTaskForm, TaskList } from '../router';
 import './App.css';
 import { ITask } from '../interafces';
-import React, { FC } from 'react';
 
 function App() {
   function createItem(body: string, condition: string = 'active', createDate: Date) {
@@ -43,7 +38,6 @@ function App() {
       body: 'Active task',
       timestamp: formatDistanceToNow(new Date(2022, 5, 1)),
     },
-
   ];
 
   const [dataState, setChangeData] = useState(taskData);
@@ -76,14 +70,14 @@ function App() {
 
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
-      case 'all':
-        return items;
-      case 'active':
-        return items.filter((item) => !item.isDone);
-      case 'completed':
-        return items.filter((item) => item.isDone);
-      default:
-        return items;
+    case 'all':
+      return items;
+    case 'active':
+      return items.filter((item) => !item.isDone);
+    case 'completed':
+      return items.filter((item) => item.isDone);
+    default:
+      return items;
     }
   }
 
@@ -104,7 +98,6 @@ function App() {
   };
 
   const onDeleteHandler = (id: number) => {
-
     const deleteArr = dataState.filter((item) => item.id !== id);
     setChangeData(deleteArr);
   };
@@ -126,21 +119,10 @@ function App() {
 
   const doneCounter = dataState.filter((item) => !item.isDone).length;
 
-  const isDoneCounter: number = dataState.filter(item => !item.isDone).length
   const onItemAdd = (text: string) => {
     const addArr = [...dataState, createItem(text, 'active', new Date())];
     setChangeData(addArr);
   };
-
-  const filterActive = () => {
-    // console.log('yay')
-    return dataState.filter(item => item.condition === 'active');
-
-    // return <>{filterArr.map(item => {
-    //   return item
-    // })}</>
-  }
-
 
   return (
     <div className="App">

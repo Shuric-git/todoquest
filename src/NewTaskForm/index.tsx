@@ -1,7 +1,5 @@
 import React, { FC, KeyboardEvent, useState } from 'react';
-
 import './NewTaskForm.css';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const NewTaskForm: FC<{
   appSubmitTask: (text: string, condition: string, timestamp: Date) => void;
@@ -9,7 +7,6 @@ const NewTaskForm: FC<{
   const { appSubmitTask } = props;
 
   const [input, setInput] = useState('');
-
 
   const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
     if (e.key === 'Enter' || e.key === 'NumpadEnter') {

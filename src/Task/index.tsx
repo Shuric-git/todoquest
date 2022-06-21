@@ -1,11 +1,10 @@
-import { FC, KeyboardEvent, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { ITaskInner } from '../interafces';
 
 import './Task.css';
 
 const Task: FC<ITaskInner> = (props: ITaskInner) => {
-
   const { isDone, body, timestamp, onDoneTaskList, taskListdeleteTask, editItem } = props;
 
   const [checked, setChecked] = useState(isDone);

@@ -1,7 +1,6 @@
 import { FC, KeyboardEvent, useState } from 'react';
 
 import { Task } from '../router';
-
 import { ITask } from '../interafces';
 
 import './TaskList.css';
