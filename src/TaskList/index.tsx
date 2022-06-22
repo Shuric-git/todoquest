@@ -42,6 +42,7 @@ const TaskList: FC<{
             type="text"
             className="edit"
             placeholder="Editing task"
+            autoFocus
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => taskEditHandler(e, id)}
           />

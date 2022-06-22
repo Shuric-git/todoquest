@@ -63,7 +63,7 @@ function App() {
       return items;
     }
 
-    return items.filter((item) => {
+    return items.filter((item: ITask) => {
       return item.body.indexOf(term) > -1;
     });
   }
@@ -73,9 +73,9 @@ function App() {
       case 'all':
         return items;
       case 'active':
-        return items.filter((item) => !item.isDone);
+        return items.filter((item: ITask) => !item.isDone);
       case 'completed':
-        return items.filter((item) => item.isDone);
+        return items.filter((item: ITask) => item.isDone);
       default:
         return items;
     }
@@ -90,7 +90,6 @@ function App() {
       if (el.id === id) {
         el.body = input;
         el.condition = 'active';
-        el.isDone = false;
       }
       return el;
     });
@@ -98,12 +97,12 @@ function App() {
   };
 
   const onDeleteHandler = (id: number) => {
-    const deleteArr = dataState.filter((item) => item.id !== id);
+    const deleteArr = dataState.filter((item: ITask) => item.id !== id);
     setChangeData(deleteArr);
   };
 
   const clearCompleted = () => {
-    const incomplete = dataState.filter((item) => !item.isDone);
+    const incomplete = dataState.filter((item: ITask) => !item.isDone);
     setChangeData(incomplete);
   };
 
@@ -117,7 +116,7 @@ function App() {
     setChangeData(doneArr);
   };
 
-  const doneCounter = dataState.filter((item) => !item.isDone).length;
+  const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;
 
   const onItemAdd = (text: string) => {
     const addArr = [...dataState, createItem(text, 'active', new Date())];
