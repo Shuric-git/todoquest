@@ -4,7 +4,6 @@ interface ITask {
   condition: string;
   timestamp: string;
   isDone: boolean;
-  // onDoneHandler: () => void
 }
 
 interface ITaskInner {
@@ -12,9 +11,9 @@ interface ITaskInner {
   id: number;
   body: string;
   timestamp: string;
-  onDoneTaskList: () => void;
-  taskListdeleteTask: () => void;
-  editItem: () => void;
+  onDoneTaskList?: () => void;
+  taskListdeleteTask?: () => void;
+  editItem?: () => void;
 }
 
 export type { ITask, ITaskInner };
