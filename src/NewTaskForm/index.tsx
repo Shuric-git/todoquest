@@ -1,10 +1,10 @@
 import React, { FC, KeyboardEvent, useState } from 'react';
 import './NewTaskForm.css';
 
-const NewTaskForm: FC<{
+export const NewTaskForm: FC<{
   appSubmitTask: (text: string, condition: string, timestamp: Date) => void;
 }> = (props) => {
-  const { appSubmitTask } = props;
+  const { appSubmitTask = () => {} } = props;
 
   const [input, setInput] = useState('');
 
@@ -24,5 +24,3 @@ const NewTaskForm: FC<{
     />
   );
 };
-
-export { NewTaskForm };

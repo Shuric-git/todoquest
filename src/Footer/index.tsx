@@ -4,7 +4,7 @@ import { TasksFilter } from '../TasksFilter';
 
 import './Footer.css';
 
-const Footer: FC<{
+export const Footer: FC<{
   doneCounter: number;
   filter: string;
   onFilterChange: (filter: string) => void;
@@ -20,5 +20,3 @@ const Footer: FC<{
     </footer>
   );
 };
-
-export { Footer };

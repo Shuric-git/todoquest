@@ -5,7 +5,7 @@ import { Footer, NewTaskForm, TaskList } from '../router';
 import './App.css';
 import { ITask } from '../interafces';
 
-function App() {
+export function App() {
   function createItem(body: string, condition: string = 'active', createDate: Date) {
     return {
       isDone: false,
@@ -149,5 +149,3 @@ function App() {
     </div>
   );
 }
-
-export { App };

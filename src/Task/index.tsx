@@ -4,8 +4,8 @@ import { ITaskInner } from '../interafces';
 
 import './Task.css';
 
-const Task: FC<ITaskInner> = (props: ITaskInner) => {
-  const { isDone, body, timestamp, onDoneTaskList, taskListdeleteTask, editItem } = props;
+export const Task: FC<ITaskInner> = (props: ITaskInner) => {
+  const { isDone, body, timestamp, onDoneTaskList = () => {}, taskListdeleteTask = () => {}, editItem } = props;
 
   const [checked, setChecked] = useState(isDone);
 
@@ -26,10 +26,3 @@ const Task: FC<ITaskInner> = (props: ITaskInner) => {
     </div>
   );
 };
-
-Task.defaultProps = {
-  onDoneTaskList: () => {},
-  taskListdeleteTask: () => {},
-};
-
-export { Task };

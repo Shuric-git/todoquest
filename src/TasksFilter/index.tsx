@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-const TasksFilter: FC<{
+export const TasksFilter: FC<{
   filter: string;
   onFilterChange: (name: string) => void;
 }> = ({ filter, onFilterChange }) => {
@@ -24,5 +24,3 @@ const TasksFilter: FC<{
 
   return <ul className="filters">{buttonsEl}</ul>;
 };
-
-export { TasksFilter };
