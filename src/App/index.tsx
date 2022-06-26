@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { Footer, NewTaskForm, TaskList } from '../router'
-import './App.css'
-import { ITask } from '../interafces'
+import { Footer, NewTaskForm, TaskList } from '../router';
+import './App.css';
+import { ITask } from '../interafces';
 
-function App() {
+export function App() {
   function createItem(body: string, condition: string = 'active', createDate: Date) {
     return {
       isDone: false,
@@ -63,21 +63,22 @@ function App() {
       return items;
     }
 
-    return items.filter((item) => {
+    return items.filter((item: ITask) => {
       return item.body.indexOf(term) > -1;
     })
   }
 
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
-    case 'all':
-      return items;
-    case 'active':
-      return items.filter((item) => !item.isDone);
-    case 'completed':
-      return items.filter((item) => item.isDone);
-    default:
-      return items;
+
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item: ITask) => !item.isDone);
+      case 'completed':
+        return items.filter((item: ITask) => item.isDone);
+      default:
+        return items;
     }
   }
 
@@ -90,7 +91,6 @@ function App() {
       if (el.id === id) {
         el.body = input;
         el.condition = 'active';
-        el.isDone = false;
       }
       return el;
     })
@@ -98,12 +98,12 @@ function App() {
   }
 
   const onDeleteHandler = (id: number) => {
-    const deleteArr = dataState.filter((item) => item.id !== id);
+    const deleteArr = dataState.filter((item: ITask) => item.id !== id);
     setChangeData(deleteArr);
   }
 
   const clearCompleted = () => {
-    const incomplete = dataState.filter((item) => !item.isDone);
+    const incomplete = dataState.filter((item: ITask) => !item.isDone);
     setChangeData(incomplete);
   }
 
@@ -117,7 +117,7 @@ function App() {
     setChangeData(doneArr);
   }
 
-  const doneCounter = dataState.filter((item) => !item.isDone).length;
+  const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;
 
   const onItemAdd = (text: string) => {
     const addArr = [...dataState, createItem(text, 'active', new Date())];
@@ -150,5 +150,3 @@ function App() {
     </div>
   );
 }
-
-export { App };

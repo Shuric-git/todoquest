@@ -5,14 +5,14 @@ import { ITask } from '../interafces';
 
 import './TaskList.css';
 
-const TaskList: FC<{
+export const TaskList: FC<{
   tasks: Array<ITask>;
   appDeleteTask: (id: number) => void;
   taskEdit: (input: string, id: number) => void;
   editItem: (id: number) => void;
   onDoneApp: (id: number) => void;
 }> = (props) => {
-  const { tasks, onDoneApp, appDeleteTask, editItem, taskEdit } = props;
+  const { tasks, onDoneApp = () => {}, appDeleteTask = () => {}, editItem, taskEdit } = props;
 
   const [input, setInput] = useState('');
 
@@ -42,6 +42,7 @@ const TaskList: FC<{
             type="text"
             className="edit"
             placeholder="Editing task"
+            autoFocus
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => taskEditHandler(e, id)}
           />
@@ -52,11 +53,5 @@ const TaskList: FC<{
     );
   })
   return <ul className="todo-list">{elements}</ul>;
-}
 
-TaskList.defaultProps = {
-  appDeleteTask: () => {},
-  onDoneApp: () => {},
 };
-
-export { TaskList };
