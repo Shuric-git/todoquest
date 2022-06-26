@@ -20,9 +20,9 @@ const TasksFilter: FC<{
         </button>
       </li>
     );
-  });
+  })
 
   return <ul className="filters">{buttonsEl}</ul>;
-};
+}
 
 export { TasksFilter };

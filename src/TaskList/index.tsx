@@ -1,7 +1,6 @@
 import { FC, KeyboardEvent, useState } from 'react';
 
 import { Task } from '../router';
-
 import { ITask } from '../interafces';
 
 import './TaskList.css';
@@ -51,9 +50,9 @@ const TaskList: FC<{
         )}
       </li>
     );
-  });
+  })
   return <ul className="todo-list">{elements}</ul>;
-};
+}
 
 TaskList.defaultProps = {
   appDeleteTask: () => {},

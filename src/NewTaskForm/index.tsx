@@ -25,6 +25,6 @@ const NewTaskForm: FC<{
       onKeyDown={(e) => submitTask(e)}
     />
   );
-};
+}
 
 export { NewTaskForm };

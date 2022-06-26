@@ -19,6 +19,6 @@ const Footer: FC<{
       </button>
     </footer>
   );
-};
+}
 
 export { Footer };

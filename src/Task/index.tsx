@@ -12,7 +12,7 @@ const Task: FC<ITaskInner> = (props: ITaskInner) => {
   const checkedHandler = () => {
     onDoneTaskList();
     setChecked(!checked);
-  };
+  }
 
   return (
     <div className="view">
@@ -25,7 +25,7 @@ const Task: FC<ITaskInner> = (props: ITaskInner) => {
       <button className="icon icon-destroy" onClick={taskListdeleteTask} />
     </div>
   );
-};
+}
 
 Task.defaultProps = {
   onDoneTaskList: () => {},
