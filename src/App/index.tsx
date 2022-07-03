@@ -6,40 +6,27 @@ import './App.css';
 import { ITask } from '../interafces';
 
 export function App() {
-  function createItem(body: string, condition: string = 'active', createDate: Date) {
+  function createItem(body: string, condition: string = 'active', createDate: Date, min: number, sec: number) {
+    let id = Date.now();
+    localStorage.setItem(id.toString(), JSON.stringify({ min: min, sec: sec }));
     return {
       isDone: false,
-      id: Date.now(),
+      id: id,
       condition,
       body,
       timestamp: formatDistanceToNow(createDate),
+      min,
+      sec,
     };
   }
 
-  const taskData = [
-    {
-      isDone: true,
-      condition: 'completed',
-      id: 2135642,
-      body: 'Completed task',
-      timestamp: formatDistanceToNow(new Date(2022, 5, 7)),
-    },
-    {
-      isDone: false,
-      condition: 'active',
-      id: 2112356442,
-      body: 'Editing task',
-      timestamp: formatDistanceToNow(new Date()),
-    },
-    {
-      isDone: false,
-      condition: 'active',
-      id: 2134642,
-      body: 'Active task',
-      timestamp: formatDistanceToNow(new Date(2022, 5, 1)),
-    },
-  ];
+  const taskData = [];
 
+  for (let i = 0; i < localStorage.length; i++) {
+    let key: string = localStorage.key(i) || '';
+    taskData.push(JSON.parse(localStorage.getItem(key) || ''));
+  }
+  console.log(taskData);
   const [dataState, setChangeData] = useState(taskData);
 
   const [filterState, setFilter] = useState('all');
@@ -50,9 +37,9 @@ export function App() {
         el.condition = 'editing';
       }
       return el;
-    })
+    });
     setChangeData(editArr);
-  }
+  };
 
   function filterChange(filter: string) {
     setFilter(filter);
@@ -65,12 +52,11 @@ export function App() {
 
     return items.filter((item: ITask) => {
       return item.body.indexOf(term) > -1;
-    })
+    });
   }
 
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
-
       case 'all':
         return items;
       case 'active':
@@ -93,19 +79,19 @@ export function App() {
         el.condition = 'active';
       }
       return el;
-    })
+    });
     setChangeData(editArr);
-  }
+  };
 
   const onDeleteHandler = (id: number) => {
     const deleteArr = dataState.filter((item: ITask) => item.id !== id);
     setChangeData(deleteArr);
-  }
+  };
 
   const clearCompleted = () => {
     const incomplete = dataState.filter((item: ITask) => !item.isDone);
     setChangeData(incomplete);
-  }
+  };
 
   const onDoneHandler = (id: number) => {
     const doneArr = dataState.map((el: ITask) => {
@@ -113,16 +99,16 @@ export function App() {
         el.isDone = !el.isDone;
       }
       return el;
-    })
+    });
     setChangeData(doneArr);
-  }
+  };
 
   const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;
 
-  const onItemAdd = (text: string) => {
-    const addArr = [...dataState, createItem(text, 'active', new Date())];
+  const onItemAdd = (text: string, condition = 'active', timestamp = new Date(), min: number, sec: number) => {
+    const addArr = [...dataState, createItem(text, 'active', new Date(), min, sec)];
     setChangeData(addArr);
-  }
+  };
 
   return (
     <div className="App">

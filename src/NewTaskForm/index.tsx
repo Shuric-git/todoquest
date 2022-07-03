@@ -2,25 +2,52 @@ import React, { FC, KeyboardEvent, useState } from 'react';
 import './NewTaskForm.css';
 
 export const NewTaskForm: FC<{
-  appSubmitTask: (text: string, condition: string, timestamp: Date) => void;
+  appSubmitTask: (body: string, condition: string, timestamp: Date, min: number, sec: number) => void;
 }> = (props) => {
   const { appSubmitTask = () => {} } = props;
 
-  const [input, setInput] = useState('');
+  // const [input, setInput] = useState('');
+  // const [newTaskTimer, setNewTaskTimer] = useState({ min: 0, sec: 0 });
+  const [newTaskState, setNewTaskState] = useState({ body: '', min: 0, sec: 0 });
 
   const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
     if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-      appSubmitTask(input, 'active', new Date());
+      console.log(newTaskState);
+      appSubmitTask(newTaskState['body'], 'active', new Date(), newTaskState['min'], newTaskState['sec']);
+      setNewTaskState({ body: '', min: 0, sec: 0 });
     }
   };
 
   return (
-    <input
-      className="new-todo"
-      placeholder="What needs to be done?"
-      autoFocus
-      onChange={(e) => setInput(e.target.value)}
-      onKeyDown={(e) => submitTask(e)}
-    />
+    <>
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        autoFocus
+        value={newTaskState['body']}
+        onChange={(e) =>
+          setNewTaskState({ body: e.target.value, min: Number(e.target.value), sec: newTaskState['sec'] })
+        }
+        onKeyDown={(e) => submitTask(e)}
+      />
+      <input
+        className="new-todo-form__timer"
+        placeholder="Min"
+        autoFocus
+        onChange={(e) => {
+          setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
+        }}
+        onKeyDown={(e) => submitTask(e)}
+      />
+      <input
+        className="new-todo-form__timer"
+        placeholder="Sec"
+        autoFocus
+        onChange={(e) =>
+          setNewTaskState({ body: newTaskState['body'], sec: Number(e.target.value), min: newTaskState['min'] })
+        }
+        onKeyDown={(e) => submitTask(e)}
+      />
+    </>
   );
 };

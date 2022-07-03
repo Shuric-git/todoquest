@@ -41,17 +41,25 @@
     }
     & .description {
         word-break: break-all;
-        display: block;
+        display: flex;
+		justify-content: space-between;
+		width: 60px;
         line-height: 1.2;
         transition: color 0.4s;
+		font-size: 13px;
         font-weight: 400;
         color: #4d4d4d;
     }
 }
 
-.todo-list li.completed label .description {
+.todo-list li label .title {
+	transition: all 0.2s ease-out;
+}
+
+.todo-list li.completed label .title {
 	color: #cdcdcd;
 	text-decoration: line-through;
+	transition: all 0.2s ease-out;
 }
 
 .todo-list li .icon {
@@ -108,4 +116,33 @@
 	.todo-list li .toggle {
 		height: 40px;
 	}
+}
+
+.todo-list li .icon-pause,
+.todo-list li .icon-play {
+	font-size: 18px;
+	width: 18px;
+	height: 40px;
+}
+
+.timerVisual {
+	margin-left: 27px;
+}
+
+.todo-list li .icon-pause {
+	//left: -30px;
+}
+
+.todo-list li .icon-play {
+	font-size: 15px;
+	height: 35px;
+	width: 27px;
+}
+
+.icon-pause:after {
+	content: '⏸';
+}
+
+.icon-play:after {
+	content: '▶';
 }

@@ -19,10 +19,4 @@ export const Footer: FC<{
       </button>
     </footer>
   );
-<<<<<<< HEAD
-}
-
-export { Footer };
-=======
 };
->>>>>>> 14bbeec7482c93499f36abc1904f366146a1345b

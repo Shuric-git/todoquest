@@ -20,13 +20,7 @@ export const TasksFilter: FC<{
         </button>
       </li>
     );
-  })
+  });
 
   return <ul className="filters">{buttonsEl}</ul>;
-<<<<<<< HEAD
-}
-
-export { TasksFilter };
-=======
 };
->>>>>>> 14bbeec7482c93499f36abc1904f366146a1345b

@@ -51,7 +51,6 @@ export const TaskList: FC<{
         )}
       </li>
     );
-  })
+  });
   return <ul className="todo-list">{elements}</ul>;
-
 };
