@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import { Footer, NewTaskForm, TaskList } from '../router';
@@ -8,7 +8,6 @@ import { ITask } from '../interafces';
 export function App() {
   function createItem(body: string, condition: string = 'active', createDate: Date, min: number, sec: number) {
     let id = Date.now();
-    localStorage.setItem(id.toString(), JSON.stringify({ min: min, sec: sec }));
     return {
       isDone: false,
       id: id,
@@ -20,16 +19,15 @@ export function App() {
     };
   }
 
-  const taskData = [];
+  let taskData: any = [];
 
-  for (let i = 0; i < localStorage.length; i++) {
-    let key: string = localStorage.key(i) || '';
-    taskData.push(JSON.parse(localStorage.getItem(key) || ''));
-  }
-  console.log(taskData);
   const [dataState, setChangeData] = useState(taskData);
 
   const [filterState, setFilter] = useState('all');
+
+  useEffect(() => {
+    setChangeData(JSON.parse(localStorage.getItem('todoquest') || '[]'));
+  }, []);
 
   const editItem = (id: number) => {
     const editArr = dataState.map((el: ITask) => {
@@ -84,7 +82,7 @@ export function App() {
   };
 
   const onDeleteHandler = (id: number) => {
-    const deleteArr = dataState.filter((item: ITask) => item.id !== id);
+    const deleteArr = JSON.parse(localStorage.getItem('todoquest') || '[]').filter((item: ITask) => item.id !== id);
     setChangeData(deleteArr);
   };
 
@@ -106,8 +104,10 @@ export function App() {
   const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;
 
   const onItemAdd = (text: string, condition = 'active', timestamp = new Date(), min: number, sec: number) => {
-    const addArr = [...dataState, createItem(text, 'active', new Date(), min, sec)];
-    setChangeData(addArr);
+    let storedTasks = JSON.parse(localStorage.getItem('todoquest') || '[]');
+    storedTasks.push(createItem(text, 'active', new Date(), min, sec));
+    localStorage.setItem('todoquest', JSON.stringify(storedTasks));
+    setChangeData(storedTasks);
   };
 
   return (

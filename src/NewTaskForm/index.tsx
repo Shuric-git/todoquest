@@ -12,7 +12,7 @@ export const NewTaskForm: FC<{
 
   const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
     if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-      console.log(newTaskState);
+      // console.log(newTaskState);
       appSubmitTask(newTaskState['body'], 'active', new Date(), newTaskState['min'], newTaskState['sec']);
       setNewTaskState({ body: '', min: 0, sec: 0 });
     }

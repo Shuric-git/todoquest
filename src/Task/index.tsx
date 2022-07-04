@@ -1,6 +1,5 @@
 import { FC, useState, useEffect } from 'react';
 
-// import { TaskTimer } from '../router';
 import { ITaskInner } from '../interafces';
 
 import './Task.css';
@@ -26,6 +25,7 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
   useEffect(() => {
     let timerData = { ...timerState };
     let timerId: ReturnType<typeof setTimeout>;
+    let stored = JSON.parse(localStorage.getItem('todoquest') || '[]');
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
@@ -41,19 +41,19 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
           setTimerData({ min: 0, sec: 0 });
           clearInterval(timerId);
         }
-        console.log(timerData);
-        localStorage.setItem(id.toString(), JSON.stringify(timerData) || '');
-        console.log(JSON.parse(localStorage.getItem(id.toString()) || ''));
       }, 1000);
     }
     return () => {
-      taskObj.isDone = isDone;
-      taskObj.body = body;
-      taskObj.min = min;
-      taskObj.sec = sec;
+      stored.map((item: any) => {
+        if (item.id === id) {
+          item.isDone = isDone;
+          item.body = body;
+          item.min = timerData.min;
+          item.sec = timerData.sec;
+        }
+      });
       setTaskObj(taskObj);
-      localStorage.setItem(id + 'storaged', JSON.stringify(taskObj));
-      localStorage.setItem(id.toString(), JSON.stringify(timerData));
+      localStorage.setItem('todoquest', JSON.stringify(stored));
       console.log('timer is stopped');
       clearInterval(timerId);
     };
