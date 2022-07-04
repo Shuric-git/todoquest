@@ -17,15 +17,22 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
     editItem,
   } = props;
 
-  const [checked, setChecked] = useState(isDone);
-  const [timerState, setTimerData] = useState({ min, sec });
-  const [stopTimeState, setStopTimeState] = useState(true);
-  const [taskObj, setTaskObj] = useState({ id, isDone, body, timestamp, min, sec });
+  const [checked, setChecked] = useState<boolean>(isDone);
+  const [timerState, setTimerData] = useState<{ min: number; sec: number }>({ min, sec });
+  const [stopTimeState, setStopTimeState] = useState<boolean>(true);
+  const [taskObj, setTaskObj] = useState<{
+    id: number;
+    isDone: boolean;
+    body: string;
+    timestamp: string;
+    min: number;
+    sec: number;
+  }>({ id, isDone, body, timestamp, min, sec });
 
   useEffect(() => {
-    let timerData = { ...timerState };
+    let timerData: { min: number; sec: number } = { ...timerState };
     let timerId: ReturnType<typeof setTimeout>;
-    let stored = JSON.parse(localStorage.getItem('todoquest') || '[]');
+
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
@@ -37,13 +44,16 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
         timerData = { ...newTimer };
         setTimerData(timerData);
         if (timerData['min'] < 0) {
-          console.log('time is run out');
+          setStopTimeState(true);
           setTimerData({ min: 0, sec: 0 });
           clearInterval(timerId);
         }
       }, 1000);
     }
     return () => {
+      let stored: Array<{ isDone: boolean; body: string; min: number; sec: number }> = JSON.parse(
+        localStorage.getItem('todoquest') || '[]'
+      );
       stored.map((item: any) => {
         if (item.id === id) {
           item.isDone = isDone;
@@ -53,13 +63,13 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
         }
       });
       setTaskObj(taskObj);
+      localStorage.removeItem('todoquest');
       localStorage.setItem('todoquest', JSON.stringify(stored));
-      console.log('timer is stopped');
       clearInterval(timerId);
     };
   }, [stopTimeState]);
 
-  const checkedHandler = () => {
+  const checkedHandler: () => void = () => {
     onDoneTaskList();
     setChecked(!checked);
   };

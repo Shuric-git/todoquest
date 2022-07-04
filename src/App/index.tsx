@@ -39,6 +39,12 @@ export function App() {
     setChangeData(editArr);
   };
 
+  const rewriteData: (newData: Array<{}>) => void = (newData) => {
+    localStorage.removeItem('todoquest');
+    localStorage.setItem('todoquest', JSON.stringify(newData));
+    setChangeData(newData);
+  };
+
   function filterChange(filter: string) {
     setFilter(filter);
   }
@@ -71,34 +77,34 @@ export function App() {
   const visibleItems = filter(search(dataState, term), filterState);
 
   const taskEdit = (input: string, id: number) => {
-    const editArr = dataState.map((el: ITask) => {
+    const editArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {
       if (el.id === id) {
         el.body = input;
         el.condition = 'active';
       }
       return el;
     });
-    setChangeData(editArr);
+    rewriteData(editArr);
   };
 
   const onDeleteHandler = (id: number) => {
-    const deleteArr = JSON.parse(localStorage.getItem('todoquest') || '[]').filter((item: ITask) => item.id !== id);
-    setChangeData(deleteArr);
+    const deleteArr = dataState.filter((item: ITask) => item.id !== id);
+    rewriteData(deleteArr);
   };
 
   const clearCompleted = () => {
-    const incomplete = dataState.filter((item: ITask) => !item.isDone);
-    setChangeData(incomplete);
+    const incomplete = JSON.parse(localStorage.getItem('todoquest') || '[]').filter((item: ITask) => !item.isDone);
+    rewriteData(incomplete);
   };
 
   const onDoneHandler = (id: number) => {
-    const doneArr = dataState.map((el: ITask) => {
+    const doneArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {
       if (el.id === id) {
         el.isDone = !el.isDone;
       }
       return el;
     });
-    setChangeData(doneArr);
+    rewriteData(doneArr);
   };
 
   const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;

@@ -6,14 +6,11 @@ export const NewTaskForm: FC<{
 }> = (props) => {
   const { appSubmitTask = () => {} } = props;
 
-  // const [input, setInput] = useState('');
-  // const [newTaskTimer, setNewTaskTimer] = useState({ min: 0, sec: 0 });
   const [newTaskState, setNewTaskState] = useState({ body: '', min: 0, sec: 0 });
 
   const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
     if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-      // console.log(newTaskState);
-      appSubmitTask(newTaskState['body'], 'active', new Date(), newTaskState['min'], newTaskState['sec']);
+      appSubmitTask(newTaskState['body'], 'active', new Date(), newTaskState['min'] || 0, newTaskState['sec']);
       setNewTaskState({ body: '', min: 0, sec: 0 });
     }
   };
@@ -25,9 +22,7 @@ export const NewTaskForm: FC<{
         placeholder="What needs to be done?"
         autoFocus
         value={newTaskState['body']}
-        onChange={(e) =>
-          setNewTaskState({ body: e.target.value, min: Number(e.target.value), sec: newTaskState['sec'] })
-        }
+        onChange={(e) => setNewTaskState({ body: e.target.value, min: newTaskState['min'], sec: newTaskState['sec'] })}
         onKeyDown={(e) => submitTask(e)}
       />
       <input
@@ -35,7 +30,10 @@ export const NewTaskForm: FC<{
         placeholder="Min"
         autoFocus
         onChange={(e) => {
-          setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
+          if (/\d+/.test(e.target.value)) {
+            console.log(e.target.value.match(/\d+/));
+            setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
+          }
         }}
         onKeyDown={(e) => submitTask(e)}
       />
