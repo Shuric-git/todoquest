@@ -27,7 +27,7 @@ export const NewTaskForm: FC<{
       />
       <input
         className="new-todo-form__timer"
-        placeholder="Min"
+        placeholder="min"
         autoFocus
         onChange={(e) => {
           setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
@@ -36,7 +36,7 @@ export const NewTaskForm: FC<{
       />
       <input
         className="new-todo-form__timer"
-        placeholder="Sec"
+        placeholder="sec"
         autoFocus
         onChange={(e) =>
           setNewTaskState({ body: newTaskState['body'], sec: Number(e.target.value), min: newTaskState['min'] })
