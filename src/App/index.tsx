@@ -50,16 +50,6 @@ export function App() {
     setFilter(filter);
   }
 
-  // function search(items: Array<ITask>, term: string) {
-  //   if (term.length === 0) {
-  //     return items;
-  //   }
-  //
-  //   return items.filter((item: ITask) => {
-  //     return item.body.indexOf(term) > -1;
-  //   });
-  // }
-
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
       case 'all':
@@ -73,9 +63,7 @@ export function App() {
     }
   }
 
-  // let term = '';
-
-  const visibleItems = filter(JSON.parse(localStorage.getItem('todoquest') || '[]'), filterState);
+  const visibleItems = filter(dataState, filterState);
 
   const taskEdit = (input: string, id: number) => {
     const editArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {

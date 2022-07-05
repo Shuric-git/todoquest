@@ -30,10 +30,7 @@ export const NewTaskForm: FC<{
         placeholder="Min"
         autoFocus
         onChange={(e) => {
-          if (/\d+/.test(e.target.value)) {
-            console.log(e.target.value.match(/\d+/));
-            setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
-          }
+          setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
         }}
         onKeyDown={(e) => submitTask(e)}
       />
