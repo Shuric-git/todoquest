@@ -16,7 +16,7 @@ export const NewTaskForm: FC<{
   };
 
   return (
-    <>
+    <div className="newTaskWrapper">
       <input
         className="new-todo"
         placeholder="What needs to be done?"
@@ -46,6 +46,6 @@ export const NewTaskForm: FC<{
         }
         onKeyDown={(e) => submitTask(e)}
       />
-    </>
+    </div>
   );
 };

@@ -30,12 +30,13 @@ export function App() {
   }, []);
 
   const editItem = (id: number) => {
-    const editArr = dataState.map((el: ITask) => {
+    const editArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {
       if (el.id === id) {
         el.condition = 'editing';
       }
       return el;
     });
+    console.log(editArr);
     setChangeData(editArr);
   };
 
@@ -49,15 +50,15 @@ export function App() {
     setFilter(filter);
   }
 
-  function search(items: Array<ITask>, term: string) {
-    if (term.length === 0) {
-      return items;
-    }
-
-    return items.filter((item: ITask) => {
-      return item.body.indexOf(term) > -1;
-    });
-  }
+  // function search(items: Array<ITask>, term: string) {
+  //   if (term.length === 0) {
+  //     return items;
+  //   }
+  //
+  //   return items.filter((item: ITask) => {
+  //     return item.body.indexOf(term) > -1;
+  //   });
+  // }
 
   function filter(items: Array<ITask>, filterState: string) {
     switch (filterState) {
@@ -72,9 +73,9 @@ export function App() {
     }
   }
 
-  let term = '';
+  // let term = '';
 
-  const visibleItems = filter(search(dataState, term), filterState);
+  const visibleItems = filter(JSON.parse(localStorage.getItem('todoquest') || '[]'), filterState);
 
   const taskEdit = (input: string, id: number) => {
     const editArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {
@@ -88,7 +89,7 @@ export function App() {
   };
 
   const onDeleteHandler = (id: number) => {
-    const deleteArr = dataState.filter((item: ITask) => item.id !== id);
+    const deleteArr = JSON.parse(localStorage.getItem('todoquest') || '[]').filter((item: ITask) => item.id !== id);
     rewriteData(deleteArr);
   };
 
