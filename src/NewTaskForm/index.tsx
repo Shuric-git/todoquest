@@ -6,12 +6,18 @@ export const NewTaskForm: FC<{
 }> = (props) => {
   const { appSubmitTask = () => {} } = props;
 
-  const [newTaskState, setNewTaskState] = useState({ body: '', min: 0, sec: 0 });
+  const [newTaskState, setNewTaskState] = useState({ body: '', min: '', sec: '' });
 
   const submitTask: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
     if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-      appSubmitTask(newTaskState['body'], 'active', new Date(), newTaskState['min'] || 0, newTaskState['sec']);
-      setNewTaskState({ body: '', min: 0, sec: 0 });
+      appSubmitTask(
+        newTaskState['body'],
+        'active',
+        new Date(),
+        parseInt(newTaskState['min']) || 0,
+        parseInt(newTaskState['sec'])
+      );
+      setNewTaskState({ body: '', min: '', sec: '' });
     }
   };
 
@@ -29,8 +35,13 @@ export const NewTaskForm: FC<{
         className="new-todo-form__timer"
         placeholder="min"
         autoFocus
+        value={newTaskState['min']}
         onChange={(e) => {
-          setNewTaskState({ body: newTaskState['body'], min: Number(e.target.value), sec: newTaskState['sec'] });
+          setNewTaskState({
+            body: newTaskState['body'],
+            min: e.target.value.replace(/\D/, ''),
+            sec: newTaskState['sec'],
+          });
         }}
         onKeyDown={(e) => submitTask(e)}
       />
@@ -38,8 +49,13 @@ export const NewTaskForm: FC<{
         className="new-todo-form__timer"
         placeholder="sec"
         autoFocus
+        value={newTaskState['sec']}
         onChange={(e) =>
-          setNewTaskState({ body: newTaskState['body'], sec: Number(e.target.value), min: newTaskState['min'] })
+          setNewTaskState({
+            body: newTaskState['body'],
+            sec: e.target.value.replace(/\D/, ''),
+            min: newTaskState['min'],
+          })
         }
         onKeyDown={(e) => submitTask(e)}
       />

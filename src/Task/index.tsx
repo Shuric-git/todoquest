@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 
-import { ITaskInner } from '../interafces';
+import { ITaskInner, ITask } from '../interafces';
 
 import './Task.css';
 
@@ -36,10 +36,10 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
-        newTimer['sec'] = newTimer['sec'] - 1;
+        newTimer['sec'] -= 1;
         if (newTimer['sec'] < 0) {
           newTimer['sec'] = 59;
-          newTimer['min'] = newTimer['min'] - 1;
+          newTimer['sec'] -= 1;
         }
         timerData = { ...newTimer };
         setTimerData(timerData);
@@ -51,10 +51,8 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
       }, 1000);
     }
     return () => {
-      let stored: Array<{ isDone: boolean; body: string; min: number; sec: number }> = JSON.parse(
-        localStorage.getItem('todoquest') || '[]'
-      );
-      stored.map((item: any) => {
+      let stored: Array<ITask> = JSON.parse(localStorage.getItem('todoquest') || '[]');
+      stored.map((item: { id: number; isDone: boolean; body: string; min: number; sec: number }) => {
         if (item.id === id) {
           item.isDone = isDone;
           item.body = body;
@@ -101,7 +99,6 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
                 {
                   e.stopPropagation();
                   setStopTimeState(true);
-                  console.log(stopTimeState);
                 }
               }}
             ></button>
