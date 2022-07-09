@@ -39,7 +39,7 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
         newTimer['sec'] -= 1;
         if (newTimer['sec'] < 0) {
           newTimer['sec'] = 59;
-          newTimer['sec'] -= 1;
+          newTimer['min'] -= 1;
         }
         timerData = { ...newTimer };
         setTimerData(timerData);
