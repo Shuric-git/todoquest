@@ -54,6 +54,8 @@
 
 .todo-list li label .title {
 	transition: all 0.2s ease-out;
+	max-width: 55%;
+	word-break: break-all;
 }
 
 .todo-list li.completed label .title {
@@ -67,10 +69,9 @@
 	top: 0;
 	bottom: -3px;
 	width: 30px;
-	height: 40px;
 	font-size: 34px;
 	color: #cc9a9a;
-	margin: auto 0 11px;
+	margin: 3px 0 11px;
 	transition: color 0.2s ease-out;
 	cursor: pointer;
 
@@ -122,7 +123,7 @@
 .todo-list li .icon-play {
 	font-size: 18px;
 	width: 18px;
-	height: 40px;
+	margin-top: 6px;
 }
 
 .timerVisual {
@@ -135,7 +136,6 @@
 
 .todo-list li .icon-play {
 	font-size: 15px;
-	height: 35px;
 	width: 27px;
 }
 
