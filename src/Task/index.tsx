@@ -36,6 +36,11 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
+        if (newTimer['min'] < 0) {
+          setStopTimeState(true);
+          setTimerData({ min: 0, sec: 0 });
+          clearInterval(timerId);
+        }
         newTimer['sec'] -= 1;
         if (newTimer['sec'] < 0) {
           newTimer['sec'] = 59;
@@ -56,12 +61,11 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
         if (item.id === id) {
           item.isDone = isDone;
           item.body = body;
-          item.min = timerData.min;
-          item.sec = timerData.sec;
+          item.min = timerData.min < 0 ? 0 : timerData.min;
+          item.sec = timerData.min < 0 ? 0 : timerData.sec;
         }
       });
       setTaskObj(taskObj);
-      localStorage.removeItem('todoquest');
       localStorage.setItem('todoquest', JSON.stringify(stored));
       clearInterval(timerId);
     };

@@ -36,7 +36,6 @@ export function App() {
       }
       return el;
     });
-    console.log(editArr);
     setChangeData(editArr);
   };
 

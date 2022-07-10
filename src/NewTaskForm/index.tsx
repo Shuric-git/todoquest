@@ -14,8 +14,8 @@ export const NewTaskForm: FC<{
         newTaskState['body'],
         'active',
         new Date(),
-        parseInt(newTaskState['min']) || 0,
-        parseInt(newTaskState['sec'])
+        isNaN(parseInt(newTaskState['min'])) ? 0 : parseInt(newTaskState['min']),
+        isNaN(parseInt(newTaskState['sec'])) ? 0 : parseInt(newTaskState['sec'])
       );
       setNewTaskState({ body: '', min: '', sec: '' });
     }
@@ -34,29 +34,29 @@ export const NewTaskForm: FC<{
       <input
         className="new-todo-form__timer"
         placeholder="min"
-        autoFocus
         value={newTaskState['min']}
         onChange={(e) => {
           setNewTaskState({
             body: newTaskState['body'],
-            min: e.target.value.replace(/\D/, ''),
+            min: e.target.value.replace(/\D+/g, '').slice(0, 2),
             sec: newTaskState['sec'],
           });
         }}
-        onKeyDown={(e) => submitTask(e)}
+        onKeyDown={(e) => {
+          submitTask(e);
+        }}
       />
       <input
         className="new-todo-form__timer"
         placeholder="sec"
-        autoFocus
         value={newTaskState['sec']}
-        onChange={(e) =>
+        onChange={(e) => {
           setNewTaskState({
             body: newTaskState['body'],
-            sec: e.target.value.replace(/\D/, ''),
+            sec: e.target.value.replace(/\D+/g, '').slice(0, 2),
             min: newTaskState['min'],
-          })
-        }
+          });
+        }}
         onKeyDown={(e) => submitTask(e)}
       />
     </div>
