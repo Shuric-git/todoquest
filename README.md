@@ -1,5 +1,5 @@
 // Версия с таймером
-https://todoquest-jq1b111e8-shuric-git.vercel.app/
+https://todoquest-git-todowithtimer-shuric-git.vercel.app/
 
 // Старая версия
 https://todoquest.vercel.app/
