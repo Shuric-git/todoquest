@@ -36,11 +36,11 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
-        if (newTimer['min'] < 0) {
-          setStopTimeState(true);
-          setTimerData({ min: 0, sec: 0 });
-          clearInterval(timerId);
-        }
+        // if (newTimer['min'] < 0) {
+        //   setStopTimeState(true);
+        //   setTimerData({ min: 0, sec: 0 });
+        //   clearInterval(timerId);
+        // }
         newTimer['sec'] -= 1;
         if (newTimer['sec'] < 0) {
           newTimer['sec'] = 59;
@@ -107,7 +107,9 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
               }}
             ></button>
           )}
-          <span className="timerVisual">{`${timerState['min']}:${timerState['sec']}`}</span>
+          <span className="timerVisual">{`${timerState['min']}m : ${
+            timerState['sec'] < 10 ? '0' + timerState['sec'] : timerState['sec']
+          }s`}</span>
         </span>
         <span className="created">{timestamp}</span>
       </label>

@@ -44,7 +44,7 @@
   word-break: break-all;
   display: flex;
   justify-content: space-between;
-  width: 60px;
+  width: 95px;
   line-height: 1.2;
   transition: color 0.4s;
   font-size: 13px;
@@ -54,7 +54,7 @@
 
 .todo-list li label .title {
   transition: all 0.2s ease-out;
-  max-width: 55%;
+  max-width: 50%;
   word-break: break-all;
 }
 
