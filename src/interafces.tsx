@@ -20,4 +20,22 @@ interface ITaskInner {
   editItem?: () => void;
 }
 
-export type { ITask, ITaskInner };
+interface INewTask {
+  (body: string,
+  condition: string,
+  timestamp: Date,
+  min: number,
+  sec: number,
+  ): void;
+}
+
+interface ITaskObj {
+  id: number;
+  isDone: boolean;
+  body: string;
+  timestamp: string;
+  min: number;
+  sec: number;
+}
+
+export type { ITask, ITaskInner, INewTask, ITaskObj };

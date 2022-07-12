@@ -10,7 +10,7 @@ export function App() {
     let id = Date.now();
     return {
       isDone: false,
-      id: id,
+      id,
       condition,
       body,
       timestamp: formatDistanceToNow(createDate),
@@ -22,12 +22,16 @@ export function App() {
   let taskData: any = [];
 
   const [dataState, setChangeData] = useState(taskData);
+  const [completed, setCompleted] = useState(dataState.filter((item: ITask) => !item.isDone).length);
 
   const [filterState, setFilter] = useState('all');
 
   useEffect(() => {
     setChangeData(JSON.parse(localStorage.getItem('todoquest') || '[]'));
   }, []);
+  useEffect(() => {
+    setCompleted(dataState.filter((item: ITask) => !item.isDone).length);
+  }, [dataState]);
 
   const editItem = (id: number) => {
     const editArr = JSON.parse(localStorage.getItem('todoquest') || '[]').map((el: ITask) => {
@@ -92,10 +96,9 @@ export function App() {
       }
       return el;
     });
+    setCompleted(doneArr.filter((item: ITask) => !item.isDone).length);
     rewriteData(doneArr);
   };
-
-  const doneCounter = dataState.filter((item: ITask) => !item.isDone).length;
 
   const onItemAdd = (text: string, condition = 'active', timestamp = new Date(), min: number, sec: number) => {
     let storedTasks = JSON.parse(localStorage.getItem('todoquest') || '[]');
@@ -120,7 +123,7 @@ export function App() {
             taskEdit={taskEdit}
           />
           <Footer
-            doneCounter={doneCounter}
+            doneCounter={completed}
             onFilterChange={filterChange}
             filter={filterState}
             clearCompleted={clearCompleted}

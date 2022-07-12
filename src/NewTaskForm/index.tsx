@@ -1,9 +1,11 @@
 import React, { FC, KeyboardEvent, useState } from 'react';
 import './NewTaskForm.css';
 
+import { INewTask } from '../interafces';
+
 export const NewTaskForm: FC<{
-  appSubmitTask: (body: string, condition: string, timestamp: Date, min: number, sec: number) => void;
-}> = (props) => {
+  appSubmitTask: INewTask;
+}> = (props: { appSubmitTask: INewTask }) => {
   const { appSubmitTask = () => {} } = props;
 
   const [newTaskState, setNewTaskState] = useState({ body: '', min: '', sec: '' });
@@ -28,7 +30,7 @@ export const NewTaskForm: FC<{
         placeholder="What needs to be done?"
         autoFocus
         value={newTaskState['body']}
-        onChange={(e) => setNewTaskState({ body: e.target.value, min: newTaskState['min'], sec: newTaskState['sec'] })}
+        onChange={(e) => setNewTaskState({ ...newTaskState, body: e.target.value })}
         onKeyDown={(e) => submitTask(e)}
       />
       <input
@@ -36,11 +38,7 @@ export const NewTaskForm: FC<{
         placeholder="min"
         value={newTaskState['min']}
         onChange={(e) => {
-          setNewTaskState({
-            body: newTaskState['body'],
-            min: e.target.value.replace(/\D+/g, '').slice(0, 2),
-            sec: newTaskState['sec'],
-          });
+          setNewTaskState({ ...newTaskState, min: e.target.value.replace(/\D+/g, '').slice(0, 2) });
         }}
         onKeyDown={(e) => {
           submitTask(e);
@@ -51,11 +49,7 @@ export const NewTaskForm: FC<{
         placeholder="sec"
         value={newTaskState['sec']}
         onChange={(e) => {
-          setNewTaskState({
-            body: newTaskState['body'],
-            sec: e.target.value.replace(/\D+/g, '').slice(0, 2),
-            min: newTaskState['min'],
-          });
+          setNewTaskState({ ...newTaskState, sec: e.target.value.replace(/\D+/g, '').slice(0, 2) });
         }}
         onKeyDown={(e) => submitTask(e)}
       />

@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 
-import { ITaskInner, ITask } from '../interafces';
+import { ITaskInner, ITask, ITaskObj } from '../interafces';
 
 import './Task.css';
 
@@ -20,14 +20,7 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
   const [checked, setChecked] = useState<boolean>(isDone);
   const [timerState, setTimerData] = useState<{ min: number; sec: number }>({ min, sec });
   const [stopTimeState, setStopTimeState] = useState<boolean>(true);
-  const [taskObj, setTaskObj] = useState<{
-    id: number;
-    isDone: boolean;
-    body: string;
-    timestamp: string;
-    min: number;
-    sec: number;
-  }>({ id, isDone, body, timestamp, min, sec });
+  const [taskObj, setTaskObj] = useState<ITaskObj>({ id, isDone, body, timestamp, min, sec });
 
   useEffect(() => {
     let timerData: { min: number; sec: number } = { ...timerState };
@@ -36,11 +29,6 @@ export const Task: FC<ITaskInner> = (props: ITaskInner) => {
     if (!stopTimeState) {
       timerId = setInterval(() => {
         let newTimer = { ...timerData };
-        // if (newTimer['min'] < 0) {
-        //   setStopTimeState(true);
-        //   setTimerData({ min: 0, sec: 0 });
-        //   clearInterval(timerId);
-        // }
         newTimer['sec'] -= 1;
         if (newTimer['sec'] < 0) {
           newTimer['sec'] = 59;
